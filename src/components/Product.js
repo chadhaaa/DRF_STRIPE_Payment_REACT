@@ -18,7 +18,8 @@ const Product = () => {
 
   const getProduct = async () => {
     const response = await fetch(
-      `http://127.0.0.1:8000/api/product/${product_id}/`
+      // `http://127.0.0.1:8000/api/product/${product_id}/`
+      `https://drfback.herokuapp.com/api/product/${product_id}/`
     );
     const data = await response.json();
     setProd(data);
