@@ -1,23 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import "./App.css";
+import Product from "./components/Product";
+import Message from "./components/Message";
 
 function App() {
+  const [message, setMessage] = useState();
+
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      setMessage("Order completed !");
+    }
+
+    if (query.get("cancel")) {
+      setMessage("Payment wasn't successfull !!");
+    }
+  }, []);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {message ? (
+        <Message message={message} />
+      ) : (
+        <Router>
+          <Routes>
+            <Route path="/:product_id" element={<Product />} />
+          </Routes>
+        </Router>
+      )}
     </div>
   );
 }
